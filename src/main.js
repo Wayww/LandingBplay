@@ -32,6 +32,9 @@ const iconPaths = {
 
 const renderIcon = (name) => `<svg viewBox="0 0 24 24" aria-hidden="true">${iconPaths[name] ?? iconPaths.star}</svg>`;
 const iconBox = (name) => `<span class="icon-box">${renderIcon(name)}</span>`;
+const renderCopy = (item) => item.mobileDescription
+  ? `<span class="copy-desktop">${item.description}</span><span class="copy-mobile">${item.mobileDescription}</span>`
+  : item.description;
 
 const contactLabel = {
   telegram: { title: "Telegram", fallback: "Контакт будет добавлен", icon: "send" },
@@ -82,7 +85,7 @@ function renderFeatureCards(selector, items, variant = "") {
       ${item.icon ? iconBox(item.icon) : ""}
       ${item.number ? `<span class="feature-card__number">${item.number}</span>` : ""}
       <h3>${item.title}</h3>
-      <p>${item.description}</p>
+      <p>${renderCopy(item)}</p>
     </article>
   `).join("");
 }
@@ -97,7 +100,7 @@ function renderStructuredCards(selector, items) {
       </div>
       <div class="feature-card__line" aria-hidden="true"></div>
       <h3>${item.title}</h3>
-      <p>${item.description}</p>
+      <p>${renderCopy(item)}</p>
     </article>
   `).join("");
 }
@@ -171,10 +174,21 @@ function hydrateIcons() {
 }
 
 function setupFaq() {
-  document.querySelectorAll("[data-faq-button]").forEach((button, index) => {
+  const buttons = [...document.querySelectorAll("[data-faq-button]")];
+  const closeItem = (button) => {
+    const panel = document.getElementById(button.getAttribute("aria-controls"));
+    button.setAttribute("aria-expanded", "false");
+    button.querySelector(".accordion-button__mark").textContent = "+";
+    panel.classList.remove("is-open");
+  };
+
+  buttons.forEach((button, index) => {
     button.addEventListener("click", () => {
       const panel = document.getElementById(button.getAttribute("aria-controls"));
       const next = button.getAttribute("aria-expanded") !== "true";
+      if (next && window.matchMedia("(max-width: 767px)").matches) {
+        buttons.filter((item) => item !== button).forEach(closeItem);
+      }
       button.setAttribute("aria-expanded", String(next));
       button.querySelector(".accordion-button__mark").textContent = next ? "−" : "+";
       panel.classList.toggle("is-open", next);
@@ -217,6 +231,11 @@ function setupMobileMenu() {
 
   button.addEventListener("click", () => setOpen(button.getAttribute("aria-expanded") !== "true"));
   links.forEach((link) => link.addEventListener("click", () => setOpen(false)));
+  document.addEventListener("click", (event) => {
+    if (menu.hidden) return;
+    if (menu.contains(event.target) || button.contains(event.target)) return;
+    setOpen(false);
+  });
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") setOpen(false);
     if (event.key !== "Tab" || menu.hidden) return;
