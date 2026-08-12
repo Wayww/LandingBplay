@@ -1,0 +1,12 @@
+{
+  "name": "beyneplay-landing",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "python3 -m http.server 3000",
+    "lint": "node scripts/lint.js",
+    "typecheck": "node --check src/data.js && node --check src/main.js && node --check scripts/lint.js && node --check scripts/build.js",
+    "build": "node scripts/build.js"
+  }
+}

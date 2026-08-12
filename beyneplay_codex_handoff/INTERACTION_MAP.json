@@ -1,0 +1,51 @@
+{
+  "global": {
+    "scroll": "native vertical scroll; smooth anchors unless prefers-reduced-motion",
+    "header": "sticky; translucent + blur after initial scroll",
+    "leftSectionSlider": false,
+    "scrollHijacking": false
+  },
+  "hero": {
+    "phoneVisual": "decorative; optional max 6-8px pointer parallax on desktop fine pointer",
+    "primaryCta": "scroll to #contact",
+    "telegram": "external direct link",
+    "facts": "static desktop; optional horizontal snap mobile"
+  },
+  "whyNow": {
+    "cards": "static with hover feedback",
+    "sources": "external clickable links"
+  },
+  "opportunity": {
+    "geoVisual": "decorative; optional entry glow, no interactive map",
+    "cards": "static numbered cards"
+  },
+  "whatIs": {
+    "pipeline": false,
+    "cards": "4 static numbered cards; no click unless future real destination"
+  },
+  "ecosystem": {
+    "model": "2x3 card grid desktop; small decorative center hub; no orbit infographic",
+    "cards": "hover/focus highlight only",
+    "mobile": "stack cards; remove hub and connectors"
+  },
+  "partners": {
+    "dashboardScreenshot": false,
+    "benefits": "6 static benefit cards",
+    "cta": "direct contact anchors/links"
+  },
+  "team": {
+    "cards": "static; optional external profile link if actual URL exists"
+  },
+  "faq": {
+    "type": "accordion",
+    "defaultOpen": 0,
+    "allowMultipleOpen": true,
+    "nestedScrollbar": false
+  },
+  "contact": {
+    "telegram": "direct anchor",
+    "whatsapp": "direct anchor",
+    "email": "mailto",
+    "form": false
+  }
+}
